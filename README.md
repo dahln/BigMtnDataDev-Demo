@@ -1,9 +1,9 @@
-[![CI/CD Azure App Service](https://github.com/shadowlings/BlazorDemoCRUD/actions/workflows/main_blazordemocrud.yml/badge.svg)](https://github.com/shadowlings/BlazorDemoCRUD/actions/workflows/main_blazordemocrud.yml)
+[![CI/CD Azure App Service](https://github.com/shadowlings/BlazorDemoCRUD-Lite/actions/workflows/main_blazordemocrud-lite.yml/badge.svg)](https://github.com/shadowlings/BlazorDemoCRUD-Lite/actions/workflows/main_blazordemocrud-lite.yml)
 
 ![BlazorDemoCRUD](https://repository-images.githubusercontent.com/593055304/693d4e94-295c-46bf-8473-c4baac737078)
 
 ## Demo
-https://demo.shadowlings.com/
+https://demo-lite.shadowlings.com/
 
 ## What & Why
 This project is a example one way to build a .NET Web application, using Blazor, Web API, and SQL. Demonstrating simple CRUD & Search operations, protected by Authentication/Authorization. This is an active application that I continue update as .NET is updated and expanded. In some scenerios, this application could be used as a template for starting new projects.
