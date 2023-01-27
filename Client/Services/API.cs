@@ -2,7 +2,6 @@
 using BlazorSpinner;
 using BlazorDemoCRUD.Common;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -14,34 +13,14 @@ namespace BlazorDemoCRUD.Client.Services
         private NavigationManager _navigationManger { get; set; }
         private IToastService _toastService { get; set; }
         private SpinnerService _spinnerService { get; set; }
-        private IAccessTokenProvider _authenticationService { get; set; }
-        public API(HttpClient httpClient, IAccessTokenProvider authenticationService, NavigationManager navigationManager, IToastService toastService, SpinnerService spinnerService)
+        public API(HttpClient httpClient, NavigationManager navigationManager, IToastService toastService, SpinnerService spinnerService)
         {
             _httpClient = httpClient;
 
-            _authenticationService = authenticationService;
             _navigationManger = navigationManager;
             _toastService = toastService;
             _spinnerService = spinnerService;
         }
-
-
-        #region Account Management
-        async public Task<bool> AccountChangeEmail(ChangeEmail content)
-        {
-            var response = await PostAsync<bool>($"api/v1/account/email", content);
-            return response;
-        }
-        async public Task<bool> AccountChangePassword(ChangePassword content)
-        {
-            var response = await PostAsync<bool>($"api/v1/account/password", content);
-            return response;
-        }
-        async public Task AccountDeleteUser()
-        {
-            await DeleteAsync($"api/v1/account");
-        }
-        #endregion
 
         #region Customer CRUD/Search
         async public Task<string> CustomerCreate(Customer content)
@@ -140,26 +119,20 @@ namespace BlazorDemoCRUD.Client.Services
             {
                 StatusCode = System.Net.HttpStatusCode.BadRequest
             };
-            try
-            {
-                response = await _httpClient.SendAsync(httpWebRequest);
+            response = await _httpClient.SendAsync(httpWebRequest);
 
-                if (response.IsSuccessStatusCode == false)
+            if (response.IsSuccessStatusCode == false)
+            {
+                string responseContent = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(responseContent))
                 {
-                    string responseContent = await response.Content.ReadAsStringAsync();
-                    if (!string.IsNullOrEmpty(responseContent))
-                    {
-                        _toastService.ShowError(responseContent);
-                    }
+                    _toastService.ShowError(responseContent);
                 }
+            }
 
-                if(showSpinner)
-                    _spinnerService.Hide();
-            }
-            catch (AccessTokenNotAvailableException exception)
-            {
-                exception.Redirect();
-            }
+            if(showSpinner)
+                _spinnerService.Hide();
+                
             return response;
         }
 

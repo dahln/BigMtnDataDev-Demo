@@ -24,7 +24,5 @@ namespace BlazorDemoCRUD.Data
 
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public DateTime? UpdateOn { get; set; }
-
-        public string OwnerId { get; set; }
     }
 }

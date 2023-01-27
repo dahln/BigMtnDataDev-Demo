@@ -1,27 +1,14 @@
 ﻿@page "/"
 
-@using Microsoft.AspNetCore.Components.Authorization
-@using Microsoft.AspNetCore.Authorization
-
 @inject BlazorDemoCRUD.Client.Services.API API
 @inject IModalService _modalService
 
-<AuthorizeView>
-    <Authorized>
-        <div class="row">
-            <div class="col-lg-3 mx-auto">
-                <h3 class="text-center">You Are Signed In</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-3 mx-auto">
-                <input type="button" class="btn btn-primary w-100" value="Create Seed Customers" @onclick="SeedDB" />
-            </div>
-        </div>
-    </Authorized>
-    <NotAuthorized>
-    </NotAuthorized>
-</AuthorizeView>
+<div class="row">
+    <div class="col-lg-3 mx-auto">
+        <input type="button" class="btn btn-primary w-100" value="Create Seed Customers" @onclick="SeedDB" />
+    </div>
+</div>
+
 <div class="row mt-5">
     <div class="col-lg-4 offset-md-4">
         <p class="app-desc text-center">

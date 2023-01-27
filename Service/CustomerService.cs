@@ -18,7 +18,7 @@ namespace BlazorDemoCRUD.Service
             _db = dbContext;
         }
 
-        async public Task<ServiceResponse<string>> CustomerCreate(Common.Customer model, string userId)
+        async public Task<ServiceResponse<string>> CustomerCreate(Common.Customer model)
         {
             ServiceResponse<string> response = new ServiceResponse<string>();
 
@@ -42,8 +42,7 @@ namespace BlazorDemoCRUD.Service
                 Notes = model.Notes,
                 ImageBase64 = model.ImageBase64,
                 Active = model.Active,
-                Gender = model.Gender,
-                OwnerId = userId
+                Gender = model.Gender
             };
 
             _db.Customers.Add(customer);
@@ -53,9 +52,9 @@ namespace BlazorDemoCRUD.Service
             return response;
         }
 
-        async public Task<Common.Customer> CustomerGetById(string customerId, string userId)
+        async public Task<Common.Customer> CustomerGetById(string customerId)
         { 
-            var customer = await _db.Customers.Where(c => c.OwnerId == userId && c.Id == customerId).FirstOrDefaultAsync();
+            var customer = await _db.Customers.Where(c => c.Id == customerId).FirstOrDefaultAsync();
             if (customer == null)
                 return default(Common.Customer);
 
@@ -79,7 +78,7 @@ namespace BlazorDemoCRUD.Service
             return response;
         }
 
-        async public Task<ServiceResponse<string>> CustomerUpdateById(Common.Customer model, string customerId, string userId)
+        async public Task<ServiceResponse<string>> CustomerUpdateById(Common.Customer model, string customerId)
         {
             ServiceResponse<string> response = new ServiceResponse<string>();
             if (string.IsNullOrEmpty(model.Name))
@@ -89,7 +88,7 @@ namespace BlazorDemoCRUD.Service
                 return response;
             }
 
-            var customer = await _db.Customers.Where(c => c.OwnerId == userId && c.Id == customerId).FirstOrDefaultAsync();
+            var customer = await _db.Customers.Where(c => c.Id == customerId).FirstOrDefaultAsync();
             if (customer == null)
             {
                 response.Success = false;
@@ -118,9 +117,9 @@ namespace BlazorDemoCRUD.Service
             return response;
         }
 
-        async public Task CustomerDeleteById(string customerId, string userId)
+        async public Task CustomerDeleteById(string customerId)
         {
-            var customer = await _db.Customers.Where(c => c.OwnerId == userId && c.Id == customerId).FirstOrDefaultAsync();
+            var customer = await _db.Customers.Where(c => c.Id == customerId).FirstOrDefaultAsync();
 
             if (customer != null)
             {
@@ -130,9 +129,9 @@ namespace BlazorDemoCRUD.Service
         }
 
 
-        async public Task<Common.SearchResponse<Common.Customer>> CustomerSearch(Common.Search model, string userId)
+        async public Task<Common.SearchResponse<Common.Customer>> CustomerSearch(Common.Search model)
         {
-            var query = _db.Customers.Where(c => c.OwnerId == userId);
+            var query = _db.Customers.AsQueryable();
 
             if (!string.IsNullOrEmpty(model.FilterText))
             {

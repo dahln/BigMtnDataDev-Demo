@@ -1,6 +1,4 @@
-﻿using BlazorDemoCRUD.Server.Utility;
-using BlazorDemoCRUD.Service;
-using Microsoft.AspNetCore.Authorization;
+﻿using BlazorDemoCRUD.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorDemoCRUD.Server.Controllers
@@ -16,12 +14,9 @@ namespace BlazorDemoCRUD.Server.Controllers
 
         [HttpPost]
         [Route("api/v1/customer")]
-        [Authorize]
         async public Task<IActionResult> CustomerCreate([FromBody] Common.Customer model)
         {
-            string userId = User.GetUserId();
-
-            var result = await _customerService.CustomerCreate(model, userId);
+            var result = await _customerService.CustomerCreate(model);
             if(result.Success == false)
             {
                 return BadRequest(result.Message);
@@ -32,12 +27,9 @@ namespace BlazorDemoCRUD.Server.Controllers
 
         [HttpGet]
         [Route("api/v1/customer/{customerId}")]
-        [Authorize]
         async public Task<IActionResult> CustomerGetById(string customerId)
         {
-            string userId = User.GetUserId();
-
-            var customer = await _customerService.CustomerGetById(customerId, userId);
+            var customer = await _customerService.CustomerGetById(customerId);
             if (customer == null)
                 return BadRequest("Customer not found");
 
@@ -46,12 +38,9 @@ namespace BlazorDemoCRUD.Server.Controllers
 
         [HttpPut]
         [Route("api/v1/customer/{customerId}")]
-        [Authorize]
         async public Task<IActionResult> CustomerUpdateById([FromBody] Common.Customer model, string customerId)
         {
-            string userId = User.GetUserId();
-
-            var result = await _customerService.CustomerUpdateById(model, customerId, userId);
+            var result = await _customerService.CustomerUpdateById(model, customerId);
 
             if(result.Success == false)
             {
@@ -63,36 +52,27 @@ namespace BlazorDemoCRUD.Server.Controllers
 
         [HttpDelete]
         [Route("api/v1/customer/{customerId}")]
-        [Authorize]
         async public Task<IActionResult> CustomerDeleteById(string customerId)
         {
-            string userId = User.GetUserId();
-
-            await _customerService.CustomerDeleteById(customerId, userId);
+            await _customerService.CustomerDeleteById(customerId);
 
             return Ok();
         }
 
 
-        [Authorize]
         [HttpPost]
         [Route("api/v1/customers")]
         async public Task<IActionResult> CustomerSearch([FromBody] Common.Search model)
         {
-            string userId = User.GetUserId();
-
-            var searchResponse = await _customerService.CustomerSearch(model, userId);
+            var searchResponse = await _customerService.CustomerSearch(model);
             
             return Ok(searchResponse);
         }
 
         [HttpGet]
-        [Authorize]
         [Route("api/v1/seed/create/{number}")]
         async public Task<IActionResult> SeedCustomers(int number)
         {
-            string userId = User.GetUserId();
-
             for (int a = 0; a < number; a++)
             {
                 var customer = new Common.Customer()
@@ -110,18 +90,11 @@ namespace BlazorDemoCRUD.Server.Controllers
                     Active = LoremNET.Lorem.Number(0, 1) == 0 ? false : true
                 };
 
-                await _customerService.CustomerCreate(customer, userId);
+                await _customerService.CustomerCreate(customer);
             }
 
             return Ok();
         }
 
-
-        [HttpGet]
-        [Route("api/v1/ping")]
-        public IActionResult Ping()
-        {
-            return Ok("Received...");
-        }
     }//End Controller
 }
