@@ -2,11 +2,11 @@
 
 ![BlazorDemoCRUD](https://repository-images.githubusercontent.com/593055304/693d4e94-295c-46bf-8473-c4baac737078)
 
-## Demo
-https://demo-lite.shadowlings.com/
-
 ## What & Why
-This is a "Lite" version of the [BlazorDemoCRUD](https://github.com/shadowlings/BlazorDemoCRUD) project. This lite version has no external dependencies. No SQL DB. No Authentication/Authorization. Why? It is enables rapid prototyping and demoing. You could clone this project and start it up right now. The DB has been replaced with an "In Memory" database. The in memory DB will not persist data long term, so do not expect test data to last. This project still shows all the basic CRUD & search opertions. 
+This is a "Lite" version of the [BlazorDemoCRUD](https://github.com/shadowlings/BlazorDemoCRUD) project. This lite version has no external dependencies. No SQL DB. No Authentication/Authorization. Why? It is enables rapid prototyping and demoing. You could clone this project and start it up right now. The DB has been replaced with an "In Memory" database. The in memory DB will not persist data long term, so do not expect test data to last. This project still shows all the basic CRUD & search opertions.
+
+## Demo
+To demo this app, simply clone it and run it.
 
 ## Technologies
  - .NET 7
