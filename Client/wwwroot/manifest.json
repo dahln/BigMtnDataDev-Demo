@@ -1,10 +1,10 @@
 {
-  "name": "BlazorDemoCRUD",
-  "short_name": "BlazorDemoCRUD",
+  "name": "Blazor Demo CRUD",
+  "short_name": "Blazor Demo CRUD",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#191919",
-  "theme_color": "00F5FF",
+  "background_color": "#FFFFFF",
+  "theme_color": "#000000",
   "prefer_related_applications": false,
   "icons": [
     {
